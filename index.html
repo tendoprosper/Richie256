@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday, Tr. Dankan! 🎉</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #7b2d65 0%, #a6c1ee 100%);
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #c40f0f;
+      text-shadow: 2px 5px #070606;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #000000;
+      margin-bottom: 2rem;
+      font-weight: bolders;
+    }
+
+    .buttons button {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      margin: 0 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .buttons .main {
+      background: #7c3aed;
+      color: white;
+    }
+
+    .buttons .secondary {
+      border: 2px solid #7c3aed;
+      background: white;
+      color: #7c3aed;
+      box-shadow: 0 0 20px rgb(0, 0, 0);
+    }
+
+    .buttons button:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #011afc;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="sparkleCanvas"></canvas>
+
+<div class="container animate__animated animate__fadeIn">
+  <h1 class="animate__animated animate__bounceInDown">Happy Birthday Tr. Dankan!</h1>
+  <p class="animate__animated animate__fadeInUp animate__delay-1s">
+    Wishing you joy, success, and all the happiness in the world. Thank you for being such an inspiring teacher!
+  </p>
+  <div class="buttons animate__animated animate__zoomIn animate__delay-2s">
+    <button class="main">🎂 Enjoy Your Day</button>
+    <button class="secondary">🎉 Let's Celebrate!</button>
+  </div>
+  <footer class="animate__animated animate__fadeInUp animate__delay-3s">
+    Crafted with ❤️ by your student Jeirah Precious
+  </footer>
+</div>
+
+<script>
+  
+  const canvas = document.getElementById(\"sparkleCanvas\");
+  const ctx = canvas.getContext(\"2d\");
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener(\"resize\", resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 2;
+      this.speed = 0.5 + Math.random() * 1;
+      this.opacity = Math.random();
+    }
+
+    update() {
+      this.y += this.speed;
+      if (this.y > canvas.height) {
+        this.reset();
+        this.y = 0;
+      }
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 100; i++) {
+    particles.push(new Particle());
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+</body>
+</html>
